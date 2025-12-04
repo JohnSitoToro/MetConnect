@@ -1,0 +1,374 @@
+
+.contenedor {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* =======================
+   LADO IZQUIERDO (LOGIN)
+======================= */
+.lado-izquierdo {
+  flex: 0.9;
+  /* 🔹 más pequeño que antes */
+  background-color: #ffe6ee;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  text-align: center;
+  height: 100vh;
+  /* solo para mantener simetría */
+}
+
+.logo {
+  width: 55%;
+  max-width: 200px;
+  border-radius: 12px;
+}
+
+.lado-izquierdo h2 {
+  color: #b92e36;
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* 🧁 FORMULARIO */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 90%;
+  max-width: 350px;
+}
+
+.formulario input {
+  padding: 12px;
+  border: 1.5px solid #ffc1d1;
+  border-radius: 10px;
+  background-color: #fff6f9;
+  outline: none;
+  color: #4a001f;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.formulario input:focus {
+  border-color: #ff6699;
+}
+
+/* 🍰 BOTONES */
+.btn-principal {
+  background-color: #ff6699;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 3px 10px rgba(255, 102, 153, 0.3);
+}
+
+.btn-principal:hover {
+  background-color: #ff4d88;
+  transform: scale(1.05);
+}
+
+/* 🔹 BOTÓN GOOGLE */
+.btn-google {
+  background-color: #fff;
+  color: #4a001f;
+  border: 2px solid #ff6699;
+  padding: 12px 20px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-google:hover {
+  background-color: #ffebf2;
+}
+
+.icono-google {
+  width: 22px;
+  height: 22px;
+}
+
+/* 🔸 TEXTO DE ALTERNAR LOGIN / REGISTRO */
+.alternar {
+  font-size: 0.9rem;
+  color: #5a2a3d;
+  margin-top: 10px;
+}
+
+.alternar span {
+  color: #ff4d88;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.alternar span:hover {
+  text-decoration: underline;
+}
+
+/* =======================
+   LADO DERECHO (CARRUSEL)
+======================= */
+.lado-derecho {
+  flex: 1;
+  background-color: #7c2d37;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem 1rem;
+  gap: 1.5rem;
+  min-height: 100vh;
+}
+
+.aviso-domicilios {
+  color: #ffe6ee;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  text-align: center;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 12px 20px;
+  border-radius: 15px;
+  line-height: 1.4;
+  width: 85%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 🎞️ CARRUSEL */
+.carrusel {
+  position: relative;
+  width: 80%;
+  height: 70%;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.slides {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  height: 100%;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* =======================
+   🔁 RESPONSIVE DESIGN
+======================= */
+
+/* 💻 Laptops pequeñas */
+@media (max-width: 1024px) {
+
+  .lado-izquierdo,
+  .lado-derecho {
+    padding: 1.5rem;
+  }
+
+  .carrusel {
+    width: 90%;
+    height: 65%;
+  }
+}
+
+
+
+
+/* =======================
+   📱 MOBILE FIX TOTAL
+======================= */
+@media (max-width: 768px) {
+  .contenedor {
+    display: flex;
+    flex-direction: row;
+    /* mantiene las dos secciones una al lado de otra */
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .lado-izquierdo,
+  .lado-derecho {
+    width: 50%;
+    height: 100vh;
+  }
+
+  .lado-izquierdo {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lado-derecho {
+    justify-content: center;
+    padding: 1rem;
+
+  }
+
+  .carrusel {
+    height: auto;
+    /* evita que se estire */
+    max-height: 20%;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .lado-izquierdo {
+    padding: 1rem;
+    justify-content: flex-start;
+  }
+
+  .formulario {
+    width: 100%;
+  }
+
+  .btn-principal,
+  .btn-google {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .aviso-domicilios {
+    width: 95%;
+    font-size: 1rem;
+  }
+
+  .carrusel {
+    height: 40dvh;
+  }
+}
+
+/* 📱 Celulares muy pequeños */
+@media (max-width: 360px) {
+  .contenedor {
+    overflow-y: auto;
+  }
+
+  .lado-izquierdo {
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .lado-derecho {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .lado-derecho {
+    order: 1;
+  }
+
+  .lado-derecho img {
+    object-fit: cover;
+  }
+
+  .formulario input {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .btn-principal,
+  .btn-google {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+
+  .aviso-domicilios {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .carrusel {
+    height: 35vh;
+  }
+}
+
+/* --- Ajuste extra para pantallas pequeñas --- */
+@media (max-width: 480px) {
+  .lado-izquierdo {
+    padding: 1rem;
+  }
+
+  .lado-derecho {
+    height: 40vh;
+  }
+
+  input,
+  button {
+    width: 100%;
+  }
+}
+
+/* =======================
+   🌐 MODO HORIZONTAL (landscape)
+======================= */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .contenedor {
+    flex-direction: column;
+    height: auto; /* ✅ permite crecer si el contenido es mayor al viewport */
+    overflow-y: auto; /* ✅ habilita scroll vertical */
+    align-items: stretch;
+  }
+
+  .lado-izquierdo,
+  .lado-derecho {
+    width: 100%;
+    height: auto; /* ✅ evita el corte */
+    min-height: 60vh;
+    padding: 1rem;
+  }
+
+  .lado-derecho {
+    order: -1; /* 🔄 opcional: muestra el carrusel arriba */
+  }
+
+  .carrusel {
+    width: 90%;
+    height: 45vh;
+    max-height: 300px;
+  }
+
+  .aviso-domicilios {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .formulario {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .btn-principal,
+  .btn-google {
+    font-size: 0.9rem;
+  }
+}
