@@ -1,28 +1,32 @@
 /* 🌞 Tema claro */
 body[data-theme="light"] {
-  --bg-color: linear-gradient(135deg, #e77aba, #d6439a);
+  --bg-color: linear-gradient(135deg, #b7c3d8, #41536d);
   --card-color: #ffffff;
   --text-color: #1b1b1b;
-  --primary: #d6439a;
-  --primary-dark: #8A0F5A;
-  --input-bg: #fdf0f8;
-  --input-border: #dba5c9;
-  --input-focus-bg: #fce8f4;
+
+  --primary: #4d8bff;
+  --primary-dark: #2f6fff;
+
+  --input-bg: #f7faff;
+  --input-border: #c9d7ee;
+  --input-focus-bg: #eef4ff;
 }
 
 /* 🌙 Tema oscuro */
 body[data-theme="dark"] {
-  --bg-color: linear-gradient(135deg, #3a0d29, #1e0016);
-  --card-color: #242424;
+  --bg-color: linear-gradient(135deg, #102342, #00040a);
+  --card-color: #1a1f27;
   --text-color: #ffffff;
-  --primary: #e77aba;
-  --primary-dark: #b7578a;
-  --input-bg: #333;
-  --input-border: #884b6f;
-  --input-focus-bg: #444;
+
+  --primary: #4d8bff;
+  --primary-dark: #2f6fff;
+
+  --input-bg: #2f3f66;
+  --input-border: #34518a;
+  --input-focus-bg: #25345a;
 }
 
-/* Aplicación general */
+/* No cambiar */
 html, body {
   margin: 0;
   padding: 0;

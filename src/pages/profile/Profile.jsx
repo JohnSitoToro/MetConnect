@@ -42,6 +42,26 @@ const Profile = () => {
       }
     };
     fetchUser();
+
+    const load = async () => {
+    if (!user) return;
+
+    const ref = doc(db, "usuarios", user.uid);
+    const snap = await getDoc(ref);
+    
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+
+    // Si faltan campos, deshabilitar todo excepto los inputs requeridos
+    setIsIncomplete(!data.completo);
+
+    setPhone(data.telefono || "");
+    setIdNumber(data.identificacion || "");
+    setBirthdate(data.fechaNacimiento || "");
+  };
+
+  load();
   }, [user]);
 
   // 🔹 Guardar cambios de perfil

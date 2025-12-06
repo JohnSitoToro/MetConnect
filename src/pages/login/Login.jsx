@@ -20,6 +20,11 @@ export default function LoginPage() {
   const [isRegister, setIsRegister] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [documento, setDocumento] = useState("");
+  const [nacimiento, setNacimiento] = useState("");
+  const [genero, setGenero] = useState("");
+  const [direccion, setDireccion] = useState("");
   const [displayName, setDisplayName] = useState("");
   const navigate = useNavigate();
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -31,21 +36,33 @@ export default function LoginPage() {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      await setDoc(
-        doc(db, "users", user.uid),
-        {
-          nombre: user.displayName,
+      const userRef = doc(db, "usuarios", user.uid);
+      const snap = await getDoc(userRef);
+
+      if (!snap.exists()) {
+        await setDoc(userRef, {
+          nombre: user.displayName || "",
           email: user.email,
+          telefono: "",
+          identificacion: "",
+          fechaNacimiento: "",
           metodo: "google",
           fechaRegistro: new Date(),
-        },
-        { merge: true }
-      );
+          completo: false, // ⚠️ importante
+        });
+      }
+
+      const data = snap.data();
+
+      if (!data?.completo) {
+        return navigate("/profile"); // ⚠️ Redirigir a completar datos
+      }
 
       navigate("/home");
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
-
   // LOGIN con correo
   const handleEmailLogin = async (e) => {
     e.preventDefault();
@@ -71,11 +88,17 @@ export default function LoginPage() {
 
       await updateProfile(result.user, { displayName });
 
-      await setDoc(doc(db, "users", result.user.uid), {
+      await setDoc(doc(db, "usuarios", result.user.uid), {
         nombre: displayName,
         email: email,
+        telefono,
+        documento,
+        nacimiento,
+        genero,
+        direccion,
         metodo: "correo",
         fechaRegistro: new Date(),
+        completo: true
       });
 
       setIsRegister(false);
@@ -86,7 +109,7 @@ export default function LoginPage() {
 
   return (
     <div className="login-container">
-       <button className="theme-toggle" onClick={toggleTheme}>
+      <button className="theme-toggle" onClick={toggleTheme}>
         {theme === "light" ? "🌙 Modo oscuro" : "☀️ Modo claro"}
       </button>
       <div className="login-card">
@@ -100,15 +123,6 @@ export default function LoginPage() {
           className="form"
           onSubmit={isRegister ? handleRegister : handleEmailLogin}
         >
-          {isRegister && (
-            <input
-              type="text"
-              placeholder="Nombre completo"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-            />
-          )}
-
           <input
             type="email"
             placeholder="Correo electrónico"
@@ -125,15 +139,38 @@ export default function LoginPage() {
             required
           />
 
+          {isRegister && (
+            <>
+              <input type="text" placeholder="Nombre completo" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
+
+              <input type="text" placeholder="Número de teléfono" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+
+              <input type="text" placeholder="Documento de identidad" value={documento} onChange={(e) => setDocumento(e.target.value)} />
+
+              <input type="date" value={nacimiento} onChange={(e) => setNacimiento(e.target.value)} />
+
+              <select value={genero} onChange={(e) => setGenero(e.target.value)}>
+                <option>Selecciona tu género</option>
+                <option>Masculino</option>
+                <option>Femenino</option>
+                <option>Otro</option>
+              </select>
+
+              <input type="text" placeholder="Dirección" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+            </>
+          )}
+
           <button className="btn-primary">
             {isRegister ? "Crear cuenta" : "Entrar"}
           </button>
         </form>
 
-        <button className="btn-google" onClick={handleGoogleLogin}>
-          <img src="/IMG/google_logo.jpg" className="google-icon" />
-          Continuar con Google
-        </button>
+        {!isRegister && (
+          <button className="btn-google" onClick={handleGoogleLogin}>
+            <img src="/IMG/google_logo.jpg" className="google-icon" />
+            Continuar con Google
+          </button>
+        )}
 
         <p className="switch">
           {isRegister ? (
