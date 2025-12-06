@@ -110,6 +110,29 @@
   font-size: 2rem;
 }
 
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+
+  background: var(--card-color);
+  color: var(--text-color);
+
+  border: 1px solid var(--input-border);
+  padding: 10px 14px;
+
+  border-radius: 12px;
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: .3s;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+}
+
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .hero {
