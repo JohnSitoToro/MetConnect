@@ -1,175 +1,89 @@
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(180deg, #be7b97 0%, #fff0f5 100%);
-  background-attachment: fixed; /* 🔹 Hace que el fondo cubra toda la pantalla */
-  background-repeat: no-repeat;
-  background-size: cover; /* 🔹 Asegura que el gradiente cubra el área visible */
-}
-
+/* CONTENEDOR DEL PERFIL */
 .profile-container {
   max-width: 900px;
   margin: 3rem auto;
-  background: linear-gradient(180deg, #fff8fa 0%, #ffe6ee 100%);
+  background: var(--card-color);
   padding: 2.5rem 3rem;
   border-radius: 18px;
-  box-shadow: 0 8px 20px rgba(255, 102, 153, 0.25);
-  font-family: "Poppins", sans-serif;
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: all .3s ease;
 }
 
 .profile-container:hover {
-  box-shadow: 0 10px 25px rgba(255, 102, 153, 0.35);
-}
-
-.profile-container h1 {
-  text-align: center;
-  color: #ff4d88;
-  margin-bottom: 1.5rem;
-  font-size: 2.2rem;
-  font-weight: 700;
-}
-
-/* CONFIGURACIÓN */
-.config-container {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(255, 182, 193, 0.3);
-  transition: all 0.3s ease;
-}
-
-.config-container:hover {
   transform: translateY(-3px);
 }
 
-.config-section {
-  margin-bottom: 1.8rem;
-  border-top: 2px solid #ffe0eb;
-  padding-top: 1.2rem;
+/* TITULO */
+.profile-container h1 {
+  color: var(--primary);
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
 }
 
-.config-section h4 {
-  color: #ff6699;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  font-size: 1.2rem;
-}
-
+/* INPUTS */
+/* CONTENEDOR DEL INPUT */
+/* CONTENEDOR DEL INPUT */
 .config-item {
-  margin-bottom: 1.2rem;
   display: flex;
   flex-direction: column;
+  gap: .4rem;             /* espacio entre label e input */
+  margin-bottom: 1.4rem;  /* espacio entre cada campo */
 }
 
+/* LABEL */
 .config-item label {
   font-weight: 600;
-  color: #4a001f;
-  margin-bottom: 0.4rem;
+  color: var(--text-color);
 }
 
+/* INPUTS */
 .config-item input,
 .config-item select {
-  padding: 0.7rem 1rem;
-  border-radius: 10px;
-  border: 1.5px solid #ffc1d1;
-  background-color: #fff6f9;
+  width: 100%;                      /* ✅ ocupa todo el ancho disponible */
+  padding: .8rem 1rem;              /* ✅ más alto y cómodo */
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  color: var(--text-color);
+  border-radius: 12px;              /* ✅ más redondeado */
   font-size: 1rem;
-  color: #333;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: .25s ease;
 }
 
 .config-item input:focus,
 .config-item select:focus {
-  border-color: #ff6699;
-  box-shadow: 0 0 6px rgba(255, 102, 153, 0.3);
+  background: var(--input-focus-bg);
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(77,139,255,.25);
+  outline: none;
 }
 
-/* TEXTO INFORMATIVO (para usuarios con Google) */
-.info-text {
-  background-color: #fff0f5;
-  border-left: 4px solid #ff80aa;
-  padding: 0.8rem 1rem;
-  color: #702040;
-  border-radius: 10px;
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  text-align: center;
-  line-height: 1.5;
-}
-
-/* BOTONES */
-.config-buttons {
-  display: flex;
-  flex-direction: column; /* 🔹 Esto apila los botones verticalmente */
-  justify-content: center;
-  align-items: center;
-  gap: 1rem; /* 🔹 Espacio entre los botones */
-  margin-top: 2rem;
-}
-
-.btn-primary,
-.btn-secondary {
-  padding: 0.9rem 1.8rem;
+/* BOTÓN PRIMARY */
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  padding: .9rem 1.8rem;
   border-radius: 12px;
   font-weight: 600;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn-primary {
-  background: linear-gradient(90deg, #ff6699, #ff8fb8);
-  color: white;
-  box-shadow: 0 4px 12px rgba(255, 102, 153, 0.4);
+  transition: .3s;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(90deg, #ff4d88, #ff78a8);
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
+/* BOTÓN SECUNDARIO */
 .btn-secondary {
-  background: #fff0f5;
-  color: #4a001f;
-  border: 1.5px solid #ffc1d1;
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
 }
 
 .btn-secondary:hover {
-  background-color: #ffe6ee;
-  transform: scale(1.03);
-}
-
-.btn-danger {
-  padding: 0.9rem 1.8rem;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 1rem;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(90deg, #ff4d4d, #ff8080);
+  background: var(--primary);
   color: white;
-  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.4);
-  transition: all 0.3s ease;
-}
-
-.btn-danger:hover {
-  background: linear-gradient(90deg, #ff1a1a, #ff6666);
-  transform: scale(1.05);
-  box-shadow: 0 6px 15px rgba(255, 77, 77, 0.5);
-}
-
-.btn-danger:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.btn-danger {
-  margin-top: 1rem;
 }
 
 /* RESPONSIVO */
@@ -178,17 +92,8 @@ html, body {
     padding: 1.5rem;
   }
 
-  .config-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .btn-primary,
   .btn-secondary {
     width: 80%;
-  }
-
-  .config-item input {
-    font-size: 0.95rem;
   }
 }
