@@ -44,50 +44,48 @@ export const AuthProvider = ({ children }) => {
         style={{
           position: "fixed",
           inset: 0,
+          background: "rgba(0,0,0,0.35)",
+          backdropFilter: "blur(4px)",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          background: "linear-gradient(135deg, #ffe4ec, #ffd6e0)",
           zIndex: 3000,
           fontFamily: "'Poppins', sans-serif",
         }}
       >
+        {/* Spinner */}
         <div
           style={{
-            width: "55px",
-            height: "55px",
-            border: "5px solid #ffb6c1",
-            borderTop: "5px solid #ff4d88",
+            width: "60px",
+            height: "60px",
+            border: "6px solid rgba(77,139,255,.3)",
+            borderTop: "6px solid var(--primary)",
             borderRadius: "50%",
             animation: "spin 1s linear infinite",
-            marginBottom: "1.2rem",
+            marginBottom: "1rem",
           }}
         ></div>
 
+        {/* Texto */}
         <p
           style={{
-            color: "#c23b6c",
-            fontSize: "1.2rem",
-            fontWeight: 600,
-            textShadow: "0 1px 2px rgba(255,255,255,0.6)",
-            animation: "fadeIn 1.5s ease-in-out infinite alternate",
+            color: "white",
+            fontSize: "1.1rem",
+            fontWeight: 500,
+            opacity: .9,
           }}
         >
-          Verificando tu perfil... 🍓
+          Cargando sesión...
         </p>
 
         <style>
           {`
-            @keyframes spin {
-              from { transform: rotate(0deg); }
-              to { transform: rotate(360deg); }
-            }
-            @keyframes fadeIn {
-              from { opacity: 0.6; }
-              to { opacity: 1; }
-            }
-          `}
+          @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+        `}
         </style>
       </div>
     );

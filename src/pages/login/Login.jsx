@@ -10,7 +10,6 @@ import {
 } from "firebase/auth";
 
 import { doc, setDoc, getDoc } from "firebase/firestore";
-
 import "./Login.css";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext.jsx";
