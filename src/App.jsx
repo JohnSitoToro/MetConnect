@@ -1,9 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import ProtectedRoute from "./pages/context/ProtectedRoute.jsx";
-import { AuthProvider } from "./pages/context/AuthContext.jsx";
 
+// 🔹 Contextos
+import { AuthProvider } from "./pages/context/AuthContext.jsx";
+import ProtectedRoute from "./pages/context/ProtectedRoute.jsx";
+
+// 🔹 Páginas
+import Login from "./pages/login/Login.jsx";
+import Profile from "./pages/profile/Profile.jsx";
 import Home from "./pages/home/Home.jsx";
-import Login from "./pages/login/Login.jsx"; 
 import Appointment from "./pages/appointment/Appointment.jsx";
 import History from "./pages/history/History.jsx";
 import Tutorial from "./pages/tutorial/Tutorial.jsx";
@@ -15,6 +19,9 @@ export default function App() {
         {/* 🔹 Página pública */}
         <Route path="/" element={<Login />} />
 
+        {/* 🔹 Página para completar datos */}
+        <Route path="/profile" element={<Profile />} />
+
         {/* 🔒 Páginas protegidas */}
         <Route
           path="/home"
@@ -25,7 +32,7 @@ export default function App() {
           }
         />
         <Route
-          path="/Appointment"
+          path="/appointment"
           element={
             <ProtectedRoute>
               <Appointment />

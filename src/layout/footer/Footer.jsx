@@ -3,7 +3,7 @@ import "./Footer.css";
 function Footer() {
   return (
     <footer className="footer">
-      <p>© {new Date().getFullYear()} Antonella’s Dulce Fresa 🍓 | Todos los derechos reservados</p>
+      <p>© {new Date().getFullYear()} MedConnect  | Todos los derechos reservados</p>
       <div className="footer-links">
         <a href="https://www.instagram.com/antonella_dulcefresa?igsh=ZHBlbXl2amNqYWN5" target="_blank" rel="noopener noreferrer">
           <img src="/IMG/instagram.jpg" alt="Instagram" className="footer-icon" />Instagram

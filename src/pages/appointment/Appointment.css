@@ -1,0 +1,60 @@
+.appointment-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: linear-gradient(180deg, #fff8fa 0%, #ffe6ee 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(255, 102, 153, 0.25);
+  font-family: "Poppins", sans-serif;
+}
+
+.appointment-container h1 {
+  text-align: center;
+  color: #ff4d88;
+  margin-bottom: 2rem;
+}
+
+.appointment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.appointment-form label {
+  font-weight: 600;
+  color: #4a001f;
+}
+
+.appointment-form input {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1.5px solid #ffc1d1;
+  background-color: #fff6f9;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.appointment-form input:focus {
+  border-color: #ff6699;
+  box-shadow: 0 0 6px rgba(255, 102, 153, 0.3);
+}
+
+.btn-primary {
+  padding: 0.9rem 1.8rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff6699, #ff8fb8);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 102, 153, 0.4);
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #ff4d88, #ff78a8);
+  transform: scale(1.05);
+}

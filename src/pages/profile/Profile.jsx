@@ -23,6 +23,13 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+
+  // 🔹 Estados que faltaban
+  const [isIncomplete, setIsIncomplete] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [idNumber, setIdNumber] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,24 +51,24 @@ const Profile = () => {
     fetchUser();
 
     const load = async () => {
-    if (!user) return;
+      if (!user) return;
 
-    const ref = doc(db, "usuarios", user.uid);
-    const snap = await getDoc(ref);
-    
-    if (!snap.exists()) return;
+      const ref = doc(db, "usuarios", user.uid);
+      const snap = await getDoc(ref);
 
-    const data = snap.data();
+      if (!snap.exists()) return;
 
-    // Si faltan campos, deshabilitar todo excepto los inputs requeridos
-    setIsIncomplete(!data.completo);
+      const data = snap.data();
 
-    setPhone(data.telefono || "");
-    setIdNumber(data.identificacion || "");
-    setBirthdate(data.fechaNacimiento || "");
-  };
+      // 🔹 Si faltan campos, marcar incompleto
+      setIsIncomplete(!data.completo);
 
-  load();
+      setPhone(data.telefono || "");
+      setIdNumber(data.identificacion || "");
+      setBirthdate(data.fechaNacimiento || "");
+    };
+
+    load();
   }, [user]);
 
   // 🔹 Guardar cambios de perfil
@@ -121,12 +128,11 @@ const Profile = () => {
       // 🔹 Eliminar cuenta de Firebase Auth
       await deleteUser(user);
 
-      // 🔹 Cerrar sesión localmente para limpiar contexto
+      // 🔹 Cerrar sesión localmente
       await logout();
 
       alert("Tu cuenta ha sido eliminada correctamente ✅");
 
-      // 🔹 Esperar a que AuthContext se actualice antes de redirigir
       setTimeout(() => {
         navigate("/");
       }, 500);
@@ -176,6 +182,12 @@ const Profile = () => {
               ) : (
                 <p className="info-text">
                   ⚠️ Usuario de Google: no puedes cambiar la contraseña aquí.
+                </p>
+              )}
+
+              {isIncomplete && (
+                <p className="warning-text">
+                  ⚠️ Algunos campos de tu perfil están incompletos. Por favor, complétalos.
                 </p>
               )}
             </div>

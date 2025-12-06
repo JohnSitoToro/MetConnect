@@ -4,11 +4,13 @@ import Footer from "../../layout/footer/Footer.jsx";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../../pages/context/ThemeContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import "../context/ThemeContext.css";
 
 function Home() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { user } = useAuth();
 
   return (
     <>
@@ -17,7 +19,7 @@ function Home() {
         <button className="theme-toggle" onClick={toggleTheme}>
           {theme === "light" ? "🌙 Modo oscuro" : "☀️ Modo claro"}
         </button>
-        {/* Sección Hero */}
+
         <section className="hero">
           <div className="hero-text">
             <h1>Bienvenido a <span>MedConnect</span></h1>
@@ -26,15 +28,24 @@ function Home() {
               de manera rápida, segura y moderna. Reserva tus citas,
               revisa tu historial y mantén el control de tu bienestar desde un solo lugar.
             </p>
-            <button className="btn-primary" onClick={() => navigate("/appointment")}>
+            <button
+              className="btn-primary"
+              onClick={() => {
+                if (!user) return alert("Debes iniciar sesión");
+                navigate("/appointment");
+              }}
+            >
               Reservar una cita 🩺
             </button>
           </div>
 
-          <img src="/IMG/doctor_hero.jpg" alt="MedConnect Atención Médica" className="hero-img" />
+          <img
+            src="/IMG/doctor_hero.jpg"
+            alt="MedConnect Atención Médica"
+            className="hero-img"
+          />
         </section>
 
-        {/* Sección Servicios */}
         <section className="services">
           <h2>Servicios que ofrecemos</h2>
 
@@ -59,7 +70,6 @@ function Home() {
           </div>
         </section>
 
-        {/* Sección Misión */}
         <section className="mission">
           <img src="/IMG/personal_medico.jpg" alt="Equipo médico" className="img-mission" />
           <div className="mission-text">

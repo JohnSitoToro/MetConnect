@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      console.log("Usuario actual:", currentUser);
+
       if (currentUser) {
         const userRef = doc(db, "users", currentUser.uid);
         const snap = await getDoc(userRef);
@@ -36,7 +38,6 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => await signOut(auth);
 
-  // 🌸 Loader mientras se valida la sesión
   if (loading) {
     return (
       <div
