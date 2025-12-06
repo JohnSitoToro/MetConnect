@@ -8,15 +8,16 @@ import {
   reauthenticateWithCredential,
   EmailAuthProvider,
 } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { auth, db, provider } from "/firebase.config.js";
+import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { db, auth, provider } from "/firebase.config.js";
 import { useNavigate } from "react-router-dom";
 import Header from "../../layout/header/Header.jsx";
 import Footer from "../../layout/footer/Footer.jsx";
 import "./Profile.css";
 
 const Profile = () => {
-  const { user, logout } = useAuth();
+  const { user, profile, reloadProfile, logout } = useAuth();
+
   const [displayName, setDisplayName] = useState("");
   const [telefono, setTelefono] = useState("");
   const [identificacion, setIdentificacion] = useState("");
@@ -27,10 +28,11 @@ const Profile = () => {
 
   const [newPassword, setNewPassword] = useState("");
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+
+  const [isIncomplete, setIsIncomplete] = useState(false);
 
   const navigate = useNavigate();
-  const [isIncomplete, setIsIncomplete] = useState(false);
-  
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -51,17 +53,19 @@ const Profile = () => {
 
         setIsIncomplete(!data.completo);
 
-        setProviderId(data.metodo === "google" ? "google.com" : "password");
+        setProviderId(data.provider || user.providerData[0]?.providerId || "password");
       }
     };
 
     loadProfile();
   }, [user]);
 
+  // ----------------------------------------
+  // 🔹 GUARDAR CAMBIOS DEL PERFIL
+  // ----------------------------------------
   const handleSave = async () => {
     if (!user) return;
 
-    // Validación: si está incompleto, obligar a llenar todo
     if (
       telefono.trim() === "" ||
       identificacion.trim() === "" ||
@@ -74,10 +78,8 @@ const Profile = () => {
     setSaving(true);
 
     try {
-      // Actualizar displayName en Auth
       await updateProfile(user, { displayName });
 
-      // Actualizar datos en Firestore
       const ref = doc(db, "usuarios", user.uid);
 
       await updateDoc(ref, {
@@ -88,13 +90,16 @@ const Profile = () => {
         completo: true,
       });
 
+      reloadProfile();
+
       if (providerId !== "google.com" && newPassword.trim() !== "") {
         await updatePassword(user, newPassword);
+        alert("Contraseña actualizada correctamente.");
       }
 
-      alert("Datos guardados correctamente.");
-
+      alert("Datos guardados.");
       navigate("/home");
+
     } catch (error) {
       console.error(error);
       alert("Error al guardar los datos.");
@@ -103,11 +108,67 @@ const Profile = () => {
     }
   };
 
+  // ----------------------------------------
+  // 🔥 ELIMINAR CUENTA COMPLETA
+  // ----------------------------------------
+  const handleDeleteAccount = async () => {
+    if (!user) return;
+
+    const confirmDelete = window.confirm(
+      "⚠️ Esta acción eliminará tu cuenta y todos tus datos. ¿Seguro que deseas continuar?"
+    );
+    if (!confirmDelete) return;
+
+    setDeleting(true);
+
+    try {
+      // Reautenticación obligatoria
+      if (providerId === "google.com") {
+        await reauthenticateWithPopup(user, provider);
+      } else {
+        const currentPassword = prompt("Por seguridad, ingresa tu contraseña actual:");
+        if (!currentPassword) {
+          alert("Operación cancelada.");
+          setDeleting(false);
+          return;
+        }
+        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+        await reauthenticateWithCredential(user, credential);
+      }
+
+      // Eliminar Firestore
+      await deleteDoc(doc(db, "usuarios", user.uid));
+
+      // Eliminar Autenticación
+      await deleteUser(user);
+
+      // Limpiar sesión local
+      await logout();
+
+      alert("Tu cuenta ha sido eliminada correctamente.");
+      navigate("/");
+
+    } catch (error) {
+      console.error("Error al eliminar cuenta:", error);
+      alert("No se pudo eliminar la cuenta. Intenta nuevamente.");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
     <>
       <Header />
+
       <div className="profile-container">
         <h1>Completar Perfil</h1>
+
+        {isIncomplete && (
+          <p className="progress-reminder">
+            ⚠️ Tu perfil está incompleto. Completarlo te permitirá agendar citas y usar todas las funciones.
+            <br />¡Solo faltan unos pasos!
+          </p>
+        )}
 
         {user ? (
           <>
@@ -117,6 +178,7 @@ const Profile = () => {
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Ej. Juan Pérez"
               />
             </div>
 
@@ -126,7 +188,7 @@ const Profile = () => {
                 type="text"
                 value={telefono}
                 onChange={(e) => setTelefono(e.target.value)}
-                required
+                placeholder="Ej. 3101234567"
               />
             </div>
 
@@ -136,7 +198,7 @@ const Profile = () => {
                 type="text"
                 value={identificacion}
                 onChange={(e) => setIdentificacion(e.target.value)}
-                required
+                placeholder="Ej. 1234567890"
               />
             </div>
 
@@ -146,18 +208,38 @@ const Profile = () => {
                 type="date"
                 value={fechaNacimiento}
                 onChange={(e) => setFechaNacimiento(e.target.value)}
-                required
               />
             </div>
 
-            <button className="btn-primary" onClick={handleSave}>
-              {saving ? "Guardando..." : "Guardar datos"}
+            {providerId !== "google.com" && (
+              <div className="config-item">
+                <label>Nueva contraseña:</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Dejar vacío si no deseas cambiarla"
+                />
+              </div>
+            )}
+
+            <button className="btn-primary" onClick={handleSave} disabled={saving}>
+              {saving ? "Guardando..." : "Guardar cambios"}
+            </button>
+
+            <button
+              className="btn-danger"
+              onClick={handleDeleteAccount}
+              disabled={deleting}
+            >
+              {deleting ? "Eliminando..." : "Eliminar cuenta"}
             </button>
           </>
         ) : (
           <p>Cargando...</p>
         )}
       </div>
+
       <Footer />
     </>
   );

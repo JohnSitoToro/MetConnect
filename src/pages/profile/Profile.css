@@ -90,6 +90,37 @@ body{
   color: white;
 }
 
+/* BOTÓN PELIGRO (Eliminar cuenta) */
+.btn-danger {
+  margin-top: 1.2rem;
+  width: 100%;
+  padding: 0.9rem 1.8rem;
+  border-radius: 12px;
+
+  background: linear-gradient(90deg, #ff4d4d, #d93636);
+  color: white;
+  border: none;
+
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: .3s ease;
+
+  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.3);
+}
+
+.btn-danger:hover {
+  transform: scale(1.04);
+  background: linear-gradient(90deg, #ff2e2e, #c62828);
+  box-shadow: 0 6px 16px rgba(255, 0, 0, 0.45);
+}
+
+.btn-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* RESPONSIVO */
 @media (max-width: 768px) {
   .profile-container {

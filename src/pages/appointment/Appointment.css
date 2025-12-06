@@ -1,19 +1,26 @@
+/* =============================== */
+/*   CONTENEDOR PRINCIPAL          */
+/* =============================== */
 .appointment-container {
   max-width: 600px;
   margin: 3rem auto;
   padding: 2rem;
 
-  background: var(--card-color);     /* Tarjeta adaptada al tema */
+  background: var(--card-color);
   border-radius: 16px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  color: var(--text-color);
 }
 
 .appointment-container h1 {
   text-align: center;
-  color: var(--primary);
+  color: var(--text-color);
   margin-bottom: 2rem;
 }
 
+/* =============================== */
+/*   FORMULARIO                    */
+/* =============================== */
 .appointment-form {
   display: flex;
   flex-direction: column;
@@ -25,11 +32,12 @@
   color: var(--text-color);
 }
 
+/* INPUTS */
 .appointment-form input {
   padding: 0.8rem 1rem;
   border-radius: 10px;
 
-  background: var(--input-bg);         /* input según tema */
+  background: var(--input-bg);
   border: 1.5px solid var(--input-border);
   color: var(--text-color);
 
@@ -43,6 +51,69 @@
   border-color: var(--primary);
 }
 
+/* TEXTO AUXILIAR */
+.appointment-form small {
+  color: var(--text-color);
+  opacity: 0.7;
+  margin-top: -6px;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  display: block;
+}
+
+/* =============================== */
+/*   SELECT DE SERVICIO            */
+/* =============================== */
+.appointment-form select {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  color: var(--text-color);
+
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+
+  transition: border-color 0.3s ease, background 0.3s ease;
+  appearance: none;
+}
+
+/* Flecha personalizada */
+.appointment-form select {
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='%23ffffff' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 18px;
+}
+
+.appointment-form select:hover {
+  border-color: var(--primary);
+}
+
+.appointment-form select:focus {
+  background: var(--input-focus-bg);
+  border-color: var(--primary);
+}
+
+/* =============================== */
+/*   MENSAJE DE PROGRESO           */
+/* =============================== */
+.progress-reminder {
+  background: rgba(255, 204, 0, 0.15);
+  color: var(--text-color);
+  border-left: 4px solid var(--primary);
+
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+/* =============================== */
+/*   BOTÓN PRINCIPAL               */
+/* =============================== */
 .btn-primary {
   padding: 0.9rem 1.8rem;
   border-radius: 12px;
@@ -52,11 +123,48 @@
   cursor: pointer;
 
   background: var(--primary);
-  color: var(--text-color);
+  color: white;
   transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
   background: var(--primary-dark);
   transform: scale(1.05);
+}
+
+/* =============================== */
+/*   SECCIÓN GOOGLE MEET           */
+/* =============================== */
+.meet-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.btn-meet {
+  background: linear-gradient(90deg, #34a853, #0c7a33);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.btn-meet:hover {
+  transform: scale(1.04);
+  background: linear-gradient(90deg, #2f9a4d, #0a6a2c);
+}
+
+.meet-box input {
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+
+  background: var(--input-bg);
+  border: 1.5px solid var(--input-border);
+  color: var(--text-color);
+
+  outline: none;
+  cursor: not-allowed;
 }

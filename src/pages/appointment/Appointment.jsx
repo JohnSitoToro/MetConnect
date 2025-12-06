@@ -17,12 +17,15 @@ export default function Appointment() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [servicio, setServicio] = useState("");
-  const [loading, setLoading] = useState(false);  
+  const [loading, setLoading] = useState(false);
+  const [meetLink, setMeetLink] = useState("");
+
+  const isIncomplete = !doctor || !fecha || !hora || !servicio;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!doctor || !fecha || !hora || !servicio) {
+    if (isIncomplete) {
       alert("Por favor completa todos los campos obligatorios.");
       return;
     }
@@ -35,16 +38,19 @@ export default function Appointment() {
         fecha,
         hora,
         servicio,
-        usuarioId: user.uid, // 🔹 Guarda usuario
+        meetLink,
+        usuarioId: user.uid,
         creadoEn: serverTimestamp(),
       });
 
       alert("✅ Cita agendada correctamente.");
+
       setDoctor("");
       setEstado("Pendiente");
       setFecha("");
       setHora("");
       setServicio("");
+      setMeetLink("");
 
       navigate("/history");
     } catch (error) {
@@ -61,49 +67,92 @@ export default function Appointment() {
       <div className="appointment-container">
         <h1>Agendar Nueva Cita</h1>
 
+        {isIncomplete && (
+          <p className="progress-reminder">
+            ⚠️ ¡Formulario incompleto! Completa todos los campos para continuar.
+          </p>
+        )}
+
         <form className="appointment-form" onSubmit={handleSubmit}>
+          {/* DOCTOR */}
           <label>Doctor</label>
           <input
             type="text"
-            placeholder="Nombre del doctor"
+            placeholder="Ej. Dr. Juan Pérez"
             value={doctor}
             onChange={(e) => setDoctor(e.target.value)}
           />
+          <small>Ingresa el nombre del médico.</small>
 
+          {/* ESTADO */}
           <label>Estado</label>
           <input
             type="text"
-            placeholder="Pendiente / Confirmada / Cancelada"
             value={estado}
-            onChange={(e) => setEstado(e.target.value)}
+            disabled
           />
+          <small>Este campo se establece automáticamente como Pendiente.</small>
 
+          {/* FECHA */}
           <label>Fecha</label>
           <input
             type="date"
             value={fecha}
             onChange={(e) => setFecha(e.target.value)}
           />
+          <small>Selecciona la fecha deseada.</small>
 
+          {/* HORA */}
           <label>Hora</label>
           <input
             type="time"
             value={hora}
             onChange={(e) => setHora(e.target.value)}
           />
+          <small>Elige la hora más conveniente.</small>
 
+          {/* SERVICIO (SELECT) */}
           <label>Servicio</label>
-          <input
-            type="text"
-            placeholder="Consulta médica, Telemedicina, etc."
+          <select
             value={servicio}
             onChange={(e) => setServicio(e.target.value)}
-          />
+          >
+            <option value="">Selecciona un servicio</option>
+            <option value="Consulta general">Consulta general</option>
+            <option value="Telemedicina">Telemedicina</option>
+            <option value="Pediatría">Pediatría</option>
+            <option value="Odontología">Odontología</option>
+            <option value="Psicología">Psicología</option>
+            <option value="Laboratorio clínico">Laboratorio clínico</option>
+          </select>
+          <small>Escoge el tipo de atención que necesitas.</small>
 
+          {/* BOTÓN */}
           <button className="btn-primary" disabled={loading}>
             {loading ? "Agendando..." : "Agendar cita"}
           </button>
         </form>
+        {/* VIDEOLLAMADA POR MEET */}
+        <label>Videollamada (opcional)</label>
+
+        <div className="meet-box">
+          <button
+            type="button"
+            className="btn-meet"
+            onClick={() => setMeetLink("https://meet.google.com/new")}
+          >
+            Generar enlace de Google Meet
+          </button>
+
+          <input
+            type="text"
+            placeholder="Enlace de videollamada"
+            value={meetLink}
+            readOnly
+          />
+        </div>
+
+        <small>Si deseas una cita virtual, genera y comparte el enlace de Google Meet.</small>
       </div>
       <Footer />
     </>

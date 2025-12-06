@@ -2,9 +2,12 @@ import "./Home.css";
 import Header from "../../layout/header/Header.jsx";
 import Footer from "../../layout/footer/Footer.jsx";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function Home() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  
   return (
     <>
       <Header />
