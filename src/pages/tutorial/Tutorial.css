@@ -1,0 +1,28 @@
+.tutorial-container {
+  max-width: 900px;
+  min-height: 65vh;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: var(--card-color);
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  color: var(--text-color);
+}
+
+.tutorial-container h2 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.video-wrapper {
+  margin-top: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+}
+
+video {
+  width: 100%;
+  outline: none;
+  border-radius: 12px;
+}

@@ -2,15 +2,15 @@
   max-width: 600px;
   margin: 3rem auto;
   padding: 2rem;
-  background: linear-gradient(180deg, #fff8fa 0%, #ffe6ee 100%);
+
+  background: var(--card-color);     /* Tarjeta adaptada al tema */
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(255, 102, 153, 0.25);
-  font-family: "Poppins", sans-serif;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .appointment-container h1 {
   text-align: center;
-  color: #ff4d88;
+  color: var(--primary);
   margin-bottom: 2rem;
 }
 
@@ -22,23 +22,25 @@
 
 .appointment-form label {
   font-weight: 600;
-  color: #4a001f;
+  color: var(--text-color);
 }
 
 .appointment-form input {
   padding: 0.8rem 1rem;
   border-radius: 10px;
-  border: 1.5px solid #ffc1d1;
-  background-color: #fff6f9;
+
+  background: var(--input-bg);         /* input según tema */
+  border: 1.5px solid var(--input-border);
+  color: var(--text-color);
+
   font-size: 1rem;
-  color: #333;
   outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, background 0.3s ease;
 }
 
 .appointment-form input:focus {
-  border-color: #ff6699;
-  box-shadow: 0 0 6px rgba(255, 102, 153, 0.3);
+  background: var(--input-focus-bg);
+  border-color: var(--primary);
 }
 
 .btn-primary {
@@ -48,13 +50,13 @@
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  background: linear-gradient(90deg, #ff6699, #ff8fb8);
-  color: white;
-  box-shadow: 0 4px 12px rgba(255, 102, 153, 0.4);
-  transition: all 0.3s;
+
+  background: var(--primary);
+  color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(90deg, #ff4d88, #ff78a8);
+  background: var(--primary-dark);
   transform: scale(1.05);
 }

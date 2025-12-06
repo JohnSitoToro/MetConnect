@@ -30,6 +30,7 @@ const Profile = () => {
 
   const navigate = useNavigate();
   const [isIncomplete, setIsIncomplete] = useState(false);
+  
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -84,7 +85,7 @@ const Profile = () => {
         telefono,
         identificacion,
         fechaNacimiento,
-        completo: true, 
+        completo: true,
       });
 
       if (providerId !== "google.com" && newPassword.trim() !== "") {

@@ -2,21 +2,13 @@ import "./Home.css";
 import Header from "../../layout/header/Header.jsx";
 import Footer from "../../layout/footer/Footer.jsx";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { ThemeContext } from "../../pages/context/ThemeContext.jsx";
-import { useAuth } from "../context/AuthContext.jsx";
-import "../context/ThemeContext.css";
 
 function Home() {
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useContext(ThemeContext);
   return (
     <>
       <Header />
       <div className="home-container">
-        <button className="theme-toggle" onClick={toggleTheme}>
-          {theme === "light" ? "🌙 Modo oscuro" : "☀️ Modo claro"}
-        </button>
 
         <section className="hero">
           <div className="hero-text">

@@ -1,0 +1,44 @@
+.medical-history {
+  max-width: 900px;
+  min-height: 100vh;
+  margin: 3rem auto;
+  background: var(--card-color);
+  padding: 2.5rem 3rem;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: all .3s ease;
+}
+
+.medical-history h2 {
+  color: var(--primary);
+  margin-bottom: 1.2rem;
+  font-size: 1.8rem;
+}
+
+.medical-history p {
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.history-table th, 
+.history-table td {
+  padding: 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--input-border);
+  color: var(--text-color);
+}
+
+.history-table th {
+  background: var(--input-bg);
+  font-weight: 600;
+}
+
+.history-table tr:hover {
+  background: var(--input-focus-bg);
+}

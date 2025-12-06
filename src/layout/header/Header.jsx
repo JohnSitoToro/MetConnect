@@ -2,11 +2,15 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../pages/context/AuthContext.jsx";
 import logo from "/IMG/logo_MedConnect.jpg";
 import "./Header.css";
+import { useContext } from "react";
+import { ThemeContext } from "../../pages/context/ThemeContext.jsx";
+import "../../pages/context/ThemeContext.css";
 
 function Header() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const handleLogout = async () => {
     await logout();
@@ -19,7 +23,7 @@ function Header() {
   return (
     <header className={`header ${isProfilePage ? "profile-page" : ""}`}>
       <div className="logo-container">
-        <img src={logo} alt="Dulce Fresa" className="logo_H" />
+        <img src={logo} alt="Logo" className="logo_H" />
       </div>
 
       <nav>
@@ -40,9 +44,9 @@ function Header() {
           )}
 
           <li><NavLink to="/home">Inicio</NavLink></li>
-          <li><NavLink to="/products">Productos</NavLink></li>
-          <li><NavLink to="/cart">Carrito</NavLink></li>
-          <li><NavLink to="/about">Sobre Nosotros</NavLink></li>
+          <li><NavLink to="/appointment">Agendar Citas</NavLink></li>
+          <li><NavLink to="/history">Historial Medico</NavLink></li>
+          <li><NavLink to="/tutorial">Tutorial</NavLink></li>
 
           {user ? (
             <li>
@@ -53,6 +57,12 @@ function Header() {
           ) : (
             <li><NavLink to="/">Iniciar sesión</NavLink></li>
           )}
+
+          <li>
+            <button className="theme-toggle" onClick={toggleTheme}>
+              {theme === "light" ? "🌙 Modo Oscuro" : "☀️ Modo Claro"}
+            </button>
+          </li>
         </ul>
       </nav>
     </header>
