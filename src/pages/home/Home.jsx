@@ -10,8 +10,6 @@ import "../context/ThemeContext.css";
 function Home() {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const { user } = useAuth();
-
   return (
     <>
       <Header />
