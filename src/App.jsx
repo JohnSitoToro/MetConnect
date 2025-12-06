@@ -1,15 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./pages/context/AuthContext.jsx";
 import ProtectedRoute from "./pages/context/ProtectedRoute.jsx";
+import { AuthProvider } from "./pages/context/AuthContext.jsx";
 
 import Home from "./pages/home/Home.jsx";
 import Login from "./pages/login/Login.jsx"; 
-import Products from "./pages/products/Products.jsx";
-import Profile from "./pages/profile/Profile.jsx";
-import Cart from "./pages/cart/Cart.jsx";
-import About from "./pages/about/About.jsx";
-
-import "./App.css";
+import Appointment from "./pages/appointment/Appointment.jsx";
+import History from "./pages/history/History.jsx";
+import Tutorial from "./pages/tutorial/Tutorial.jsx";
 
 export default function App() {
   return (
@@ -28,34 +25,26 @@ export default function App() {
           }
         />
         <Route
-          path="/profile"
+          path="/Appointment"
           element={
             <ProtectedRoute>
-              <Profile />
+              <Appointment />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/products"
+          path="/history"
           element={
             <ProtectedRoute>
-              <Products />
+              <History />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/cart"
+          path="/tutorial"
           element={
             <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <ProtectedRoute>
-              <About />
+              <Tutorial />
             </ProtectedRoute>
           }
         />

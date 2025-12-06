@@ -1,0 +1,30 @@
+/* 🌞 Tema claro */
+body[data-theme="light"] {
+  --bg-color: linear-gradient(135deg, #e77aba, #d6439a);
+  --card-color: #ffffff;
+  --text-color: #1b1b1b;
+  --primary: #d6439a;
+  --primary-dark: #8A0F5A;
+  --input-bg: #fdf0f8;
+  --input-border: #dba5c9;
+  --input-focus-bg: #fce8f4;
+}
+
+/* 🌙 Tema oscuro */
+body[data-theme="dark"] {
+  --bg-color: linear-gradient(135deg, #3a0d29, #1e0016);
+  --card-color: #242424;
+  --text-color: #ffffff;
+  --primary: #e77aba;
+  --primary-dark: #b7578a;
+  --input-bg: #333;
+  --input-border: #884b6f;
+  --input-focus-bg: #444;
+}
+
+/* Aplicación general */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}

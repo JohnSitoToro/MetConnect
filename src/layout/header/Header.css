@@ -1,0 +1,187 @@
+/* ======= Estilos generales ======= */
+.header {
+  width: 100%;
+  background-color: #ffcddd;
+  color: #4a001f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid #ffb6c1;
+}
+
+/* ======= Logo ======= */
+.logo_H-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo_H {
+  height: 55px;
+  width: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  margin-left: 2rem;
+}
+
+.logo_H:hover {
+  transform: scale(1.05);
+}
+
+/* ======= Navegación ======= */
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  margin-right: 6rem;
+}
+
+.nav-list li {
+  display: flex;
+  align-items: center;
+}
+
+/* ======= User ======= */
+.btn-profile {
+  position: relative;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  color: #4a001f;
+  font-weight: 600;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+/* Forzamos que cambie el color del texto dentro también */
+.btn-profile .user {
+  color: inherit; /* el texto hereda el color del botón */
+  transition: color 0.3s ease;
+}
+
+/* Al pasar el cursor */
+.btn-profile:hover {
+  background-color: #ffb6c1; /* rosa suave */
+  color: #fff; /* texto blanco */
+  transform: scale(1.05);
+}
+
+/* ======== Tooltip personalizado ======== */
+.btn-profile::after {
+  content: "Aquí encontrarás la configuración del perfil";
+  position: absolute;
+  bottom: -2.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #4a001f;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transform-origin: top center;
+}
+
+/* 👇 Cuando estés en /profile, el tooltip se desactiva */
+.profile-page .btn-profile::after {
+  content: none;
+}
+
+/* Se muestra cuando pasas el cursor */
+.btn-profile:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-3px);
+}
+
+/* ======= Enlaces ======= */
+.nav-list a {
+  text-decoration: none;
+  color: #4a001f;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.nav-list a:hover {
+  background-color: #ffb6c1; /* rosa suave */
+  color: #fff;
+}
+
+/* ======= Enlace activo ======= */
+.nav-list a.active {
+  background-color: #ff6699; /* rosa fuerte */
+  color: white;
+  box-shadow: 0 2px 6px rgba(255, 102, 153, 0.4);
+}
+
+/* ======= Botón Cerrar sesión ======= */
+.btnClose {
+  background-color: #ff6699; /* rosa fuerte */
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.4rem 1rem;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btnClose:hover {
+  background-color: #ff4d88;
+  transform: scale(1.05);
+}
+
+/* ======= Responsivo ======= */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    padding: 0.6rem 1rem;
+  }
+
+  .logo_H {
+    height: 40px;
+    margin-left: 0;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 0.3rem;
+    margin: 0.5rem 0 0;
+  }
+
+  .nav-list a {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .btn-profile {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .btnClose {
+    width: auto;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
