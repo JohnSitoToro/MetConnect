@@ -17,7 +17,7 @@ export default function Appointment() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [servicio, setServicio] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);  
 
   const handleSubmit = async (e) => {
     e.preventDefault();

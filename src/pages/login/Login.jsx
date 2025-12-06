@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db, provider } from "/firebase.config.js";
-
 import {
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -18,17 +17,54 @@ import "../context/ThemeContext.css";
 
 export default function LoginPage() {
   const [isRegister, setIsRegister] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [documento, setDocumento] = useState("");
-  const [nacimiento, setNacimiento] = useState("");
-  const [genero, setGenero] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [displayName, setDisplayName] = useState("");
+  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
   const { theme, toggleTheme } = useContext(ThemeContext);
 
+  // Campos
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    displayName: "",
+    telefono: "",
+    documento: "",
+    nacimiento: "",
+    genero: "",
+    direccion: "",
+  });
+
+  const updateField = (field, value) => {
+    setForm({ ...form, [field]: value });
+
+    if (!value.trim()) {
+      setFormErrors({
+        ...formErrors,
+        [field]: "📝 Este campo no puede quedar vacío.",
+      });
+    } else {
+      setFormErrors({ ...formErrors, [field]: "" });
+    }
+  };
+
+  // MICROCOPIA automática para email
+  const validateEmail = () => {
+    if (!/\S+@\S+\.\S+/.test(form.email)) {
+      setFormErrors({
+        ...formErrors,
+        email: "📧 Tu correo no parece válido. Intenta revisarlo.",
+      });
+    }
+  };
+
+  // MICROCOPIA automática para password
+  const validatePassword = () => {
+    if (form.password.length < 6) {
+      setFormErrors({
+        ...formErrors,
+        password: "🔐 Tu contraseña debe tener al menos 6 caracteres.",
+      });
+    }
+  };
 
   // LOGIN con Google
   const handleGoogleLogin = async () => {
@@ -48,14 +84,14 @@ export default function LoginPage() {
           fechaNacimiento: "",
           metodo: "google",
           fechaRegistro: new Date(),
-          completo: false, // ⚠️ importante
+          completo: false,
         });
       }
 
       const data = snap.data();
 
       if (!data?.completo) {
-        return navigate("/profile"); // ⚠️ Redirigir a completar datos
+        return navigate("/profile");
       }
 
       navigate("/home");
@@ -63,42 +99,53 @@ export default function LoginPage() {
       console.error(error);
     }
   };
+
   // LOGIN con correo
   const handleEmailLogin = async (e) => {
     e.preventDefault();
+
+    if (formErrors.email || formErrors.password) return;
+
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, form.email, form.password);
       navigate("/home");
     } catch (error) {
-      alert("Correo o contraseña incorrectos.");
+      setFormErrors({
+        ...formErrors,
+        email: "⚠️ Correo o contraseña incorrectos.",
+      });
     }
   };
 
-  // REGISTRO con correo
+  // REGISTRO
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!displayName.trim()) {
-      alert("Por favor ingresa tu nombre.");
-      return;
-    }
+    const requiredFields = ["email", "password", "displayName"];
+
+    let hasError = false;
+    let newErrors = {};
+
+    requiredFields.forEach((f) => {
+      if (!form[f].trim()) {
+        newErrors[f] = "⚠️ Este campo es obligatorio.";
+        hasError = true;
+      }
+    });
+
+    setFormErrors(newErrors);
+    if (hasError) return;
 
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const result = await createUserWithEmailAndPassword(auth, form.email, form.password);
 
-      await updateProfile(result.user, { displayName });
+      await updateProfile(result.user, { displayName: form.displayName });
 
       await setDoc(doc(db, "usuarios", result.user.uid), {
-        nombre: displayName,
-        email: email,
-        telefono,
-        documento,
-        nacimiento,
-        genero,
-        direccion,
+        ...form,
         metodo: "correo",
         fechaRegistro: new Date(),
-        completo: true
+        completo: true,
       });
 
       setIsRegister(false);
@@ -109,62 +156,107 @@ export default function LoginPage() {
 
   return (
     <div className="login-container">
+
+      {/* BOTÓN MODO OSCURO */}
       <button className="theme-toggle" onClick={toggleTheme}>
         {theme === "light" ? "🌙 Modo oscuro" : "☀️ Modo claro"}
       </button>
+
       <div className="login-card">
+
+        {/* LOGO */}
         <img src="/IMG/logo_MedConnect.jpg" alt="MedConnect" className="logo" />
 
         <h2 className="title">
-          {isRegister ? "Crear cuenta" : "Iniciar sesión"}
+          {isRegister ? "Crea tu cuenta ✨" : "Bienvenido de nuevo 👋"}
         </h2>
 
-        <form
-          className="form"
-          onSubmit={isRegister ? handleRegister : handleEmailLogin}
-        >
+        <p className="subtitle">
+          {isRegister
+            ? "Solo te tomará un minuto completar tu registro."
+            : "Nos alegra verte de nuevo. Tu salud primero siempre."}
+        </p>
+
+        {/* FORM */}
+        <form onSubmit={isRegister ? handleRegister : handleEmailLogin} className="form">
+
+          {/* EMAIL */}
           <input
             type="email"
             placeholder="Correo electrónico"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            onChange={(e) => updateField("email", e.target.value)}
+            onBlur={validateEmail}
             required
           />
+          {formErrors.email && <p className="microcopy">{formErrors.email}</p>}
 
+          {/* PASSWORD */}
           <input
             type="password"
             placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={(e) => updateField("password", e.target.value)}
+            onBlur={validatePassword}
             required
           />
+          {formErrors.password && <p className="microcopy">{formErrors.password}</p>}
 
+          {/* CAMPOS ADICIONALES EN REGISTRO */}
           {isRegister && (
             <>
-              <input type="text" placeholder="Nombre completo" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
+              <input
+                type="text"
+                placeholder="¿Cómo te llamas?"
+                value={form.displayName}
+                onChange={(e) => updateField("displayName", e.target.value)}
+                required
+              />
+              {formErrors.displayName && <p className="microcopy">{formErrors.displayName}</p>}
 
-              <input type="text" placeholder="Número de teléfono" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+              <input
+                type="text"
+                placeholder="Número de contacto"
+                value={form.telefono}
+                onChange={(e) => updateField("telefono", e.target.value)}
+              />
 
-              <input type="text" placeholder="Documento de identidad" value={documento} onChange={(e) => setDocumento(e.target.value)} />
+              <input
+                type="text"
+                placeholder="Documento de identidad"
+                value={form.documento}
+                onChange={(e) => updateField("documento", e.target.value)}
+              />
 
-              <input type="date" value={nacimiento} onChange={(e) => setNacimiento(e.target.value)} />
+              <label className="label">Fecha de nacimiento</label>
+              <input
+                type="date"
+                value={form.nacimiento}
+                onChange={(e) => updateField("nacimiento", e.target.value)}
+              />
 
-              <select value={genero} onChange={(e) => setGenero(e.target.value)}>
+              <select value={form.genero} onChange={(e) => updateField("genero", e.target.value)}>
                 <option>Selecciona tu género</option>
                 <option>Masculino</option>
                 <option>Femenino</option>
                 <option>Otro</option>
               </select>
 
-              <input type="text" placeholder="Dirección" value={direccion} onChange={(e) => setDireccion(e.target.value)} />
+              <input
+                type="text"
+                placeholder="Dirección actual"
+                value={form.direccion}
+                onChange={(e) => updateField("direccion", e.target.value)}
+              />
             </>
           )}
 
           <button className="btn-primary">
-            {isRegister ? "Crear cuenta" : "Entrar"}
+            {isRegister ? "Crear mi cuenta" : "Ingresar"}
           </button>
         </form>
 
+        {/* GOOGLE LOGIN */}
         {!isRegister && (
           <button className="btn-google" onClick={handleGoogleLogin}>
             <img src="/IMG/google_logo.jpg" className="google-icon" />
@@ -172,16 +264,17 @@ export default function LoginPage() {
           </button>
         )}
 
+        {/* CAMBIAR ENTRE LOGIN / REGISTRO */}
         <p className="switch">
           {isRegister ? (
             <>
               ¿Ya tienes cuenta?{" "}
-              <span onClick={() => setIsRegister(false)}>Inicia sesión</span>
+              <span onClick={() => setIsRegister(false)}>Inicia sesión aquí</span>
             </>
           ) : (
             <>
-              ¿No tienes cuenta?{" "}
-              <span onClick={() => setIsRegister(true)}>Regístrate</span>
+              ¿Aún no tienes cuenta?{" "}
+              <span onClick={() => setIsRegister(true)}>Regístrate gratis</span>
             </>
           )}
         </p>

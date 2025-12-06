@@ -20,11 +20,8 @@
   background: var(--card-color);
   width: 100%;
   max-width: 420px;
-
-  max-height: 90vh;
-
-  overflow-y: visible;
-
+  max-height: none;
+  overflow: visible;
   padding: 2.3rem;
   border-radius: 20px;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.18);
@@ -51,11 +48,11 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-
+  gap: 16px;
+  margin-top: 15px;
   max-height: 30vh; /* ⬅️ más grande, mejor */
   overflow-y: auto;
-  padding-right: 6px;
+  padding-right: 8px;
 }
 
 .form::-webkit-scrollbar {
@@ -106,7 +103,7 @@
 
 /* ===== Botón principal ===== */
 .btn-primary {
-  margin-top: 8px;
+  margin-top: 15px;
   padding: 12px;
   border: none;
   background: var(--primary);
@@ -123,7 +120,7 @@
 
 /* ===== Google ===== */
 .btn-google {
-  margin-top: 18px;
+  margin-top: 20px;
   padding: 12px;
   background: #000000;
   border: 1.5px solid var(--primary);
@@ -149,7 +146,7 @@
 
 /* ===== Texto alternar login/registro ===== */
 .switch {
-  margin-top: 18px;
+  margin-top: 22px;
   font-size: 0.95rem;
   color: var(--text-color);
   text-align: center;
@@ -182,4 +179,15 @@
 
 .theme-toggle:hover {
   background: var(--primary-dark);
+}
+
+/* MICROCOPIAS UX WRITING */
+.microcopy {
+  font-size: 0.85rem;
+  color: var(--primary);
+  margin-top: -8px;
+  margin-bottom: 5px;
+  text-align: left;
+  padding-left: 3px;
+  animation: fadeIn 0.2s ease-in-out;
 }

@@ -9,10 +9,10 @@ import Login from "./pages/login/Login.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import Home from "./pages/home/Home.jsx";
 import Appointment from "./pages/appointment/Appointment.jsx";
-import History from "./pages/history/History.jsx";
 import Tutorial from "./pages/tutorial/Tutorial.jsx";
 import RequireCompleteProfile from "./pages/profile/RequireCompleteProfile.jsx";
 import IncompleteProfileBanner from "./pages/profile/IncompleteProfileBanner.jsx";
+import History from "./pages/history/MedicalHistory.jsx";
 
 export default function App() {
   return (
@@ -53,6 +53,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
 
           <Route
             path="/tutorial"
